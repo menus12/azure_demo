@@ -1,7 +1,7 @@
 
 
 # ITNSA Challenge 2021 
-## Module D Familiarization
+## Module D: Systems Troubleshooting
 
 
 ### Connection instructions
@@ -54,14 +54,20 @@
 ![](pics/14.PNG)
 
 
-### Mini challenge
-![](pics/diagram.png)
-
-To get yourself familiar with Azure environment you can do a couple of simple tasks:
-
-1.	Study this small network topology and make sure that Ubuntu have proper access to the internet via border Cisco VM.
-2.	Install Nginx on Ubuntu VM and run a default website. 
-3.	Check DNS zone delegated to you. Make Nginx website available via public domain name at https://website.comp-xx.az.skillscloud.company (where xx – is your individual number).
-
 ### DISCLAIMER
 Azure network system controls all basic networking routines for all virtual machines. All access to virtual machines is managed via in-band connections, so if you will change\release IP address or shutdown any network interfaces, VM will loose its connection to the network and can't be reached anymore. 
+
+### LOSING ACCESS
+In case you've lost Bastion access to any virtual machine you can try to make following steps:
+
+1) Restart bastion session (session has periodic timeout)
+2) If it's a Cisco virtual machine, try to connect using any SSH client from your machine
+3) If it's virtual machine behind Cisco with no direct SSH access from internet, try to connect to it from Cisco VM using SSH
+4) In case SSH is not working at all, you can stop virtual machine, wait until VM status will become "Stoped (deallocated)", start VM, wait until VM status will become "Running" and try to connect using Bastion or SSH
+5) If start\stop doesn't help, you can try to recover it by turning on "Boot diagnostics" option and use a serial console to bring up broken networking or SSH. 
+
+### MARKING
+- Please note that automarking will expect that all Cisco devices are available over SSH from public internet and all VMs behid Cisco devices are available over SSH from respective Cisco border devices. 
+- All SSH access for automarking is expcted to work using standard port TCP/22. 
+- If any VM will not be available over SSH, marking for this machine will be skipped. 
+- If any Cisco VM will not be available over SSH, marking will bi skiped for this VM and for VM which is behind broken Cisco VM.
